@@ -259,13 +259,16 @@ public class CardStackLayoutManager
             // スワイプ済みカードが表示される場合、データソースは正しく、表示だけが古い状態になっている
             //
             // ■ 再現手順
-            // 1. `removeAndRecycleView(getTopView(), recycler);`をコメントアウトする
+            // 1. `removeAndRecycleView(topView, recycler);`をコメントアウトする
             // 2. VisibleCount=1に設定し、最後のカードがスワイプされたらページングを行うようにする
             // 3. カードを1枚だけ画面に表示する（このカードをAとする）
             // 4. Aをスワイプする
             // 5. カードを1枚だけ画面に表示する（このカードをBとする）
             // 6. ページング完了後はBが表示されるはずが、Aが画面に表示される
-            removeAndRecycleView(getTopView(), recycler);
+            View topView = getTopView();
+            if (topView != null) {
+                removeAndRecycleView(topView, recycler);
+            }
 
             final Direction direction = state.getDirection();
 
